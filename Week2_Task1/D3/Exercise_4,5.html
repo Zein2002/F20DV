@@ -1,21 +1,24 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <script src='https://d3js.org/d3.v7.min.js'></script> 
-</head> 
-<body> 
-<script>
-    for (let i = 1; i < 11; i++) {
-        let newspan = d3.select("body").append('span');
-        newspan.text(i + " ");
-        if (i <= 5) {
-            newspan.style('color', 'red');
-        } else {
-            newspan.style('color', 'green');
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+</head>
+
+<body>
+    <script>
+        for (let i = 1; i < 11; i++) {
+            let newspan = d3.select("body").append('span');
+            newspan.text(i + " ");
+            if (i <= 5) {
+                newspan.style('color', 'red');
+            } else {
+                newspan.style('color', 'green');
+            }
         }
-    }
-    //Exercise 4:
-    d3.select("span").text("Start ").style('color', 'purple');
-</script>
-</body> 
-</html> 
+        //Exercise 4:
+        d3.select("span").text("Start ").style('color', 'purple');
+    </script>
+</body>
+
+</html>

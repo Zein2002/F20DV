@@ -1,45 +1,48 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <script src='https://d3js.org/d3.v7.min.js'></script> 
-</head> 
-<body> 
- 
-<script> 
-var numbers = [83, 32, 14, 52, 31, 66, 12, 11];
+<!DOCTYPE html>
+<html lang="en">
 
-console.log( d3.mean(numbers) );
+<head>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+</head>
 
-console.log( d3.sum(numbers) / d3.count(numbers) );
+<body>
 
-console.log( d3.median(numbers) );
+    <script>
+        var numbers = [83, 32, 14, 52, 31, 66, 12, 11];
 
-console.log( d3.extent(numbers) );
+        console.log(d3.mean(numbers));
 
-console.log( d3.deviation(numbers) ); 
+        console.log(d3.sum(numbers) / d3.count(numbers));
 
-// Exercise 2:
-let testdata = [ {name:'abc', amount:22},
-                 {name:'def', amount:12},
-                 {name:'ghi', amount:5 },
-                 {name:'jkl', amount:33},
-                 {name:'mno' } ]; // no amount for this item
+        console.log(d3.median(numbers));
 
-var amounts = [];
-testdata.forEach(function (d, i) {
-    amounts.push(d.amount);
-});
-console.log(amounts);
-console.log( d3.count(amounts) );
-console.log( d3.sum(amounts) );
-console.log( d3.mean(amounts) );
-console.log( d3.median(amounts) );
-console.log( d3.quantile(amounts.sort(), 50) );
-console.log( d3.variance(amounts) );
-console.log( d3.deviation(amounts) ); 
-console.log( d3.extent(amounts) );
-console.log( d3.min(amounts) );
-console.log( d3.max(amounts) );
-</script> 
-</body> 
-</html> 
+        console.log(d3.extent(numbers));
+
+        console.log(d3.deviation(numbers));
+
+        // Exercise 2:
+        let testdata = [{ name: 'abc', amount: 22 },
+        { name: 'def', amount: 12 },
+        { name: 'ghi', amount: 5 },
+        { name: 'jkl', amount: 33 },
+        { name: 'mno' }]; // no amount for this item
+
+        var amounts = [];
+        testdata.forEach(function (d, i) {
+            amounts.push(d.amount);
+        });
+        console.log(amounts);
+        console.log(d3.count(amounts));
+        console.log(d3.sum(amounts));
+        console.log(d3.mean(amounts));
+        console.log(d3.median(amounts));
+        console.log(d3.quantile(amounts.sort(), 50));
+        console.log(d3.variance(amounts));
+        console.log(d3.deviation(amounts));
+        console.log(d3.extent(amounts));
+        console.log(d3.min(amounts));
+        console.log(d3.max(amounts));
+    </script>
+</body>
+
+</html>
