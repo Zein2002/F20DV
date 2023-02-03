@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F20DV_Lab</title>
+</head>
+
+<body>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+    <script>
+        //Create SVG element
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", 400)
+            .attr("height", 400)
+            .style("border", '1px solid green');
+
+        d3.csv("./Shapes.csv", function (data) {
+            console.log(data);
+            switch (data.type) {
+                case "rect":
+                    svg.append("rect")
+                        .attr("x", data.position1).attr("y", data.position2)
+                        .attr("width", data.dimension1)
+                        .attr("height", data.dimension2)
+                        .attr(data.colorS, data.color);
+                    break;
+
+                case "circle":
+                    svg.append("circle")
+                        .attr("cx", data.position1)
+                        .attr("cy", data.position2)
+                        .attr("r", data.dimension1)
+                        .attr(data.colorS, data.color);
+                    break;
+
+                case "line":
+                    svg.append("line")
+                        .attr("x1", data.position1)
+                        .attr("x2", data.position2)
+                        .attr("y1", data.position3)
+                        .attr("y2", data.position4)
+                        .attr(data.colorS, data.color);
+                    break;
+
+                default:
+                    console.log("Shape not recognized/implemented.");
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+type,dimension1,dimension2,position1,position2,position3,position4,colorS,color
+rect,100,100,100,100,,,fill,yellow
+circle,100,,100,100,,,fill,green
+line,,,100,300,100,300,stroke,red

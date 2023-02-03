@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F20DV_Lab</title>
+</head>
+
+<body>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+    <style>
+        /* svg rect {
+            fill: blue;
+        } */
+
+        svg text {
+            fill: white;
+            font: 10px sans-serif;
+            text-anchor: end;
+        }
+    </style>
+    <script>
+        let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv';
+        var heart_failure = 0;
+        var heart_failure_ranges = [0, 0, 0, 0];
+        d3.csv(heartfailurecsv, function (data) {
+            console.log(data.age);
+            if (data.age > 50) { heart_failure++; }
+            if (data.age >= 1 && data.age <= 30) { heart_failure_ranges[0]++; }
+            else if (data.age >= 31 && data.age <= 40) { heart_failure_ranges[1]++; }
+            else if (data.age >= 41 && data.age <= 60) { heart_failure_ranges[2]++; }
+            else if (data.age >= 61 && data.age <= 100) { heart_failure_ranges[3]++; }
+        }).then(() => {
+            var data = heart_failure_ranges;
+            var width = d3.max(heart_failure_ranges) * 10;
+            var scaleFactor = 1;
+            var barHeight = 20;
+            var graph = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", barHeight * data.length);
+            var bar = graph.selectAll("g")
+                .data(data)
+                .enter()
+                .append("g")
+                .attr("transform", function (d, i) {
+                    return "translate(0," + i * barHeight + ")";
+                });
+            bar.append("rect")
+                .attr("fill", function (d) {
+                    let value = Math.trunc((((((d/d3.max(data))*100)) * 255) / 100)).toString(16);
+                    if (value.length < 2) {value = "0" + value};
+                    return "#" + value + "0000";
+                })
+                .attr("width", function (d) {
+                    return d * scaleFactor;
+                })
+                .attr("height", barHeight - 1);
+            bar.append("text")
+                .attr("x", function (d) { return (d * scaleFactor + 20); })
+                .attr("y", barHeight / 2)
+                .attr("dy", ".35em")
+                .attr("stroke", "black")
+                .text(function (d) { return d; });
+        });
+    </script>
+</body>
+
+</html>
