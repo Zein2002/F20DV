@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F20DV_Lab</title>
+</head>
+
+<body>
+    <script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
+
+    <button onclick='kmeanIterate();' id='step'>Iteration Step</button>
+    <br>
+
+    <script>
+        // create 10 random points (0-10)
+        // [ index assigned centroid, value ]
+        const points = Array(10).fill().map((d, i) => { return [i, Math.random() * 10, Math.random() * 10]; });
+
+        var centroids = [[2, 4], [5, 1], [9, 7]]; // 3 clusters (K)
+        var iteration = 0;
+
+        // update function to calculate k-mean step
+        function kmeanIterate() {
+            iteration++;
+            //console.log('step..');
+            // assigned each point to th nearest centroid
+            for (let i = 0; i < points.length; i++) {
+                let d = Math.sqrt((points[i][1] - centroids[0][0]) ** 2 + (points[i][2] - centroids[0][1]) ** 2);
+                points[i][0] = 0; // nearest
+
+                for (let k = 1; k < centroids.length; k++) {
+                    let dn = Math.sqrt((points[i][1] - centroids[k][0]) ** 2 + (points[i][2] - centroids[k][1]) ** 2);;
+                    if (dn < d) {
+                        d = dn;
+                        points[i][0] = k;
+                    }
+                }
+            }
+
+            // update centroids
+            for (let k = 0; k < centroids.length; k++) {
+                let xdsum = 0;
+                let ydsum = 0;
+                let dcount = 0;
+                for (let i = 0; i < points.length; i++) {
+                    if (points[i][0] === k) {
+                        xdsum += points[i][1];
+                        ydsum += points[i][2];
+                        dcount++;
+                    }
+                }
+                if (Math.abs(dcount > 0)) {
+                    xdsum /= dcount;
+                    ydsum /= dcount;
+                }
+                centroids[k][0] = xdsum;
+                centroids[k][1] = ydsum;
+            }
+
+            //console.log( centroids );
+
+            svg.selectAll('.centroid')
+                .data(centroids)
+                .attr("cx", d => { return x(d[0]); })
+                .attr("cy", d => { return y(d[1]); })
+
+            svg.selectAll('.point')
+                .data(points)
+                .style("fill", d => { return ["blue", "green", "orange"][d[0]]; })
+
+
+            document.getElementById('step').innerHTML = `Iteration Step (${iteration})`;
+        }// end iteration(..)
+
+
+        document.body.style.height = '500px';
+
+        let svg = d3.select('body').append('svg').attr('width', 400).attr('height', 400);
+
+        var x = d3.scaleLinear().domain([0, 10]).range([0, 400]);
+        var y = d3.scaleLinear().domain([0, 10]).range([0, 400]);
+
+        svg.selectAll('.centroid')
+            .data(centroids)
+            .enter().append("circle")
+            .attr('class', 'centroid')
+            .style("stroke", "gray")
+            .style("fill", (d, i) => { return ["blue", "green", "orange"][i]; })
+            .attr("r", 10)
+            .attr("cx", d => { return x(d); })
+            .attr("cy", d => { return y(d); });
+
+        svg.selectAll('.point')
+            .data(points)
+            .enter().append("circle")
+            .attr('class', 'point')
+            .style("stroke", "gray")
+            .style("fill", "gray")
+            .attr("r", 5)
+            .attr("cx", d => { return x(d[1]); })
+            .attr("cy", d => { return y(d[1]); });
+
+        console.log('ready..');
+    </script>
+</body>
+
+</html>

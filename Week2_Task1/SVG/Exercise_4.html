@@ -34,6 +34,7 @@
             else if (data.age >= 61 && data.age <= 100) { heart_failure_ranges[3]++; }
         }).then(() => {
             var data = heart_failure_ranges;
+            var myColor0 = d3.scaleLinear().domain([0, d3.max(heart_failure_ranges)]).range(["black", "red"]);
             var width = d3.max(heart_failure_ranges) * 10;
             var scaleFactor = 1;
             var barHeight = 20;
@@ -50,9 +51,10 @@
                 });
             bar.append("rect")
                 .attr("fill", function (d) {
-                    let value = Math.trunc((((((d/d3.max(data))*100)) * 255) / 100)).toString(16);
-                    if (value.length < 2) {value = "0" + value};
-                    return "#" + value + "0000";
+                    // let value = Math.trunc((((((d/d3.max(data))*100)) * 255) / 100)).toString(16);
+                    // if (value.length < 2) {value = "0" + value};
+                    // return "#" + value + "0000";
+                    return myColor0(d);
                 })
                 .attr("width", function (d) {
                     return d * scaleFactor;
